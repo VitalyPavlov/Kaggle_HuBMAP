@@ -1,0 +1,34 @@
+hydra:
+  run:
+    dir: "/home/nosound/Documents/hubmap"
+  output_subdir: null
+  job_logging:
+    disable_existing_loggers: true
+    formatters:
+      simple:
+        format: '%(message)s'
+    console:
+      level: 'CRITICAL'
+    handlers:
+      file:
+        filename: '${path.logger}/train.log'
+        level: 'CRITICAL'
+
+path:
+  base: "./input/"
+  train_img: "./input/train"
+  train_mask: "./input/train_mask"
+  logger: "./logging/${info.exp_name}"
+  tb_logger: "./logging/${info.exp_name}"
+
+
+train:
+  seed: 2021
+  epochs: 200
+  early_stop_patience: 20
+  reduce_lr_factor: 0.25
+  reduce_lr_patience: 7
+  reduce_lr_min: 1e-6
+
+
+

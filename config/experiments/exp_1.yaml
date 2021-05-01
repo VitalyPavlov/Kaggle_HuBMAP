@@ -1,0 +1,27 @@
+info:
+  exp_name: "exp_1"
+  debug_mode: False
+
+path:
+  weights: '${path.logger}/${info.exp_name}/${info.exp_name}_${dataset.fold}.pt'
+  pretrained_weights: False
+
+dataset: 
+  loader: 'src.data.dataloader.Dataset_random_img'
+  augs: 'src.data.augmentation.get_augmentation_v1'
+  preprocessing: 'src.data.augmentation.get_preprocessing'
+  fold: 0
+  train_size: 50
+  crop_dim: 4096
+  out_dim: 1024
+
+train:
+  model: 'timm-efficientnet-b3'
+  batch_size: 3
+  loss: 'torch.nn.BCEWithLogitsLoss' #'src.losses.custom_losses.BCE_DICE'
+  metrics: 'src.metrics.dice.get_metrics_custom'
+  optimizer: 'torch.optim.Adam'
+  scheduler: "torch.optim.lr_scheduler.ReduceLROnPlateau"
+  lr: 4e-4
+
+validation: 'src.trainers.validation.evaluate_model'
